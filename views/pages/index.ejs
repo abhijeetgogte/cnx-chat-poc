@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+    <main>
+    	  
+
+  <div id="videos">
+    <video id="video" autoplay style="width:680px; height:320px"></video>
+  </div>
+  
+  <canvas id="preview" style="display: none;">
+  	
+  	
+  </canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById("preview");
+		var context = canvas.getContext("2d");
+		canvas.width = 800;
+		canvas.height = 600;
+		
+		context.width = canvas.width;
+		context.height = canvas.height;
+		
+		var video = document.getElementById("video");
+		var socket = io();
+		
+		function loadCam(stream){
+			video.src = window.URL.createObjectURL(stream);
+			console.log("Successful camera input");
+			
+		}
+		function loadFail(){
+			console.log("No camera input");
+			
+		}
+		function viewVideo(video,context){
+			context.drawImage(video,0,0,context.width,context.height);	
+			socket.emit('stream', canvas.toDataURL('image/webp'));
+		}
+		
+		$(function(){
+			
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+			var constraints = {
+			  audio: false,
+			  video: true
+			};
+			
+			if(navigator.getUserMedia){
+				navigator.getUserMedia(constraints, loadCam, loadFail);
+				
+			}
+			
+			setInterval(function(){
+				viewVideo(video,context);
+			},70);
+			
+		});
+		
+
+
+		
+		
+	</script>
+  
+
+    </main>
+
+
+    
+</body>
+</html>

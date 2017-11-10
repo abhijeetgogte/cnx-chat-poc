@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="container">
+
+    <header>
+        <h1>Video Broadcast</h1>
+    </header>
+    <main>
+    	<img id="play"/>
+    	
+    	<script>
+    		var socket = io();
+    		socket.on('stream',function(image){
+    			var img = document.getElementById("play");
+    			img.src = image;
+    		})
+    		
+    	</script>
+
+ 
+
+    </main>
+
+
+    
+</body>
+</html>
