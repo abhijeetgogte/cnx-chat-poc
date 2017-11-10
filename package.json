@@ -9,6 +9,10 @@
   },
   "author": "Abhijeet",
   "license": "ISC",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/abhijeetgogte/cnx-chat-poc.git"
+  },
   "dependencies": {
     "debug": "^3.0.1",
     "express": "^4.15.4",
