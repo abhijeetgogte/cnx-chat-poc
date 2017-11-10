@@ -3,6 +3,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 var path = require("path");
+var port = process.env.PORT || 3000;
 var debug = require("debug")("ag");
 var name = 'visychat';
 
@@ -31,6 +32,8 @@ io.on('connection', function(socket){
       io.sockets.emit('newmsg', data);
   })
 });
-http.listen(3000, function(){
-  console.log('listening on localhost:3000');
+http.listen(port, function(){
+  var addr = http.address();
+  console.log('   app listening on http://' + addr.address + ':' + addr.port);
+
 });
